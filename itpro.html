@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Servicios profesionales de TI: soporte técnico, redes, videovigilancia, virtualización y desarrollo web con chatbots inteligentes para PyMEs y empresas en Mazatlán.">
+  <meta name="keywords" content="soporte técnico TI, redes empresariales, cámaras CCTV, chatbots web, reparación computadoras, Mazatlán">
+  <meta name="author" content="TI Profesional">
+  <title>TI Profesional | Soluciones Tecnológicas & Chatbots Inteligentes</title>
+
+  <!-- Bootstrap 5.3 CSS (CDN Oficial) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome 6.5 (CDN Oficial para iconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       VARIABLES & ESTILOS BASE
+       ═══════════════════════════════════════════════════════════ */
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #2563eb;
+      --accent-orange: #f97316;
+      --success-green: #22c55e;
+      --bg-light: #f8fafc;
+      --text-muted: #64748b;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+      --shadow-lg: 0 16px 40px rgba(0,0,0,0.12);
+      --radius-lg: 1rem;
+      --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--primary-dark);
+      background-color: #fff;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       COMPONENTES REUTILIZABLES
+       ═══════════════════════════════════════════════════════════ */
+    .btn-primary {
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: var(--transition-base);
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-accent {
+      background: var(--accent-orange);
+      border-color: var(--accent-orange);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      transition: var(--transition-base);
+    }
+    .btn-accent:hover {
+      background: #ea580c;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-service {
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      transition: var(--transition-base);
+      background: #fff;
+      height: 100%;
+    }
+    .card-service:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-blue);
+    }
+    .card-service .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      transition: var(--transition-base);
+    }
+    .card-service:hover .icon-box {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+
+    .section-title {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO & STATS
+       ═══════════════════════════════════════════════════════════ */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SERVICIO DESTACADO (CHATBOT WEB)
+       ═══════════════════════════════════════════════════════════ */
+    .featured-service {
+      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-service::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .chatbot-mockup {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      z-index: 2;
+    }
+    .chat-bubble {
+      background: #f1f5f9;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      margin-bottom: 0.75rem;
+      max-width: 85%;
+      font-size: 0.9rem;
+    }
+    .chat-bubble.ai {
+      background: var(--primary-blue);
+      color: #fff;
+      margin-left: auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TESTIMONIOS & FOOTER
+       ═══════════════════════════════════════════════════════════ */
+    .testimonial-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--primary-blue);
+    }
+    .carousel-indicators button {
+      background-color: var(--primary-blue) !important;
+    }
+
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: var(--transition-base);
+    }
+    footer a:hover {
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       WHATSAPP FLOTANTE
+       ═══════════════════════════════════════════════════════════ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: #25d366;
+      color: #fff;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: var(--transition-base);
+      animation: pulse-wa 2s infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      color: #fff;
+    }
+    @keyframes pulse-wa {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 767.98px) {
+      .hero-section h1 { font-size: 2.25rem !important; }
+      .stat-card { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       NAVEGACIÓN
+       ═══════════════════════════════════════════════════════════ -->
+  <nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm py-2" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" href="#">
+        <span class="bg-primary text-white px-2 py-1 rounded" style="font-size:0.9rem;">TI</span>Pro
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-medium">
+          <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chatbot-web">Web + Chatbot</a></li>
+          <li class="nav-item"><a class="nav-link" href="#beneficios">Beneficios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
+          <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+            <a class="btn btn-primary btn-sm px-3" href="#contacto">
+              <i class="fa-regular fa-calendar-check me-1"></i> Agendar Asesoría
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════════════════════════ -->
+    <section class="hero-section d-flex align-items-center min-vh-100" id="inicio">
+      <div class="container position-relative z-2 text-center text-lg-start">
+        <div class="row align-items-center">
+          <div class="col-lg-7 mb-5 mb-lg-0">
+            <span class="badge bg-light text-dark fw-semibold px-3 py-2 mb-3 d-inline-block">
+              <i class="fa-solid fa-circle-check text-success me-1"></i> Disponible para tu proyecto
+            </span>
+            <h1 class="display-4 fw-bold mb-3">Tecnología que trabaja <span class="text-info">por ti</span>, 24/7.</h1>
+            <p class="lead mb-4 text-white-50">
+              Soluciones técnicas integrales: desde soporte y redes hasta <strong>web con chatbots inteligentes</strong>. 
+              Diagnóstico rápido, precios transparentes y garantía en cada trabajo.
+            </p>
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+              <a href="#contacto" class="btn btn-accent btn-lg shadow">
+                <i class="fa-brands fa-whatsapp me-2"></i> Solicitar diagnóstico gratuito
+              </a>
+              <a href="#servicios" class="btn btn-outline-light btn-lg px-4">
+                Ver servicios
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="row g-3">
+              <div class="col-6 col-md-4">
+                <div class="stat-card">
+                  <h2 class="fw-bold mb-1 text-info">+10</h2>
+                  <small class="text-white-50">Años de experiencia</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="stat-card">
+                  <h2 class="fw-bold mb-1 text-info">+200</h2>
+                  <small class="text-white-50">Clientes satisfechos</small>
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <div class="stat-card">
+                  <h2 class="fw-bold mb-1 text-info">24/7</h2>
+                  <small class="text-white-50">Soporte activo</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SERVICIOS ESTÁNDAR
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="servicios" class="py-5 bg-light">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <h2 class="section-title mb-2">¿Qué ofrezco?</h2>
+          <p class="text-muted mx-auto" style="max-width: 600px;">Atención personalizada para hogares, PyMEs y empresas. Diagnóstico rápido y soluciones duraderas.</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Servicio 1 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-download"></i></div>
+              <h5 class="fw-bold mb-2">Instalación de Software</h5>
+              <p class="text-muted mb-0 small">Configuración de sistemas empresariales y personales. Activación de licencias y actualizaciones seguras.</p>
+            </div>
+          </div>
+          <!-- Servicio 2 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-brands fa-windows"></i></div>
+              <h5 class="fw-bold mb-2">Windows & Office</h5>
+              <p class="text-muted mb-0 small">Soporte en Win 10/11, Office 365, macros avanzadas en Excel y automatización con Google Sheets.</p>
+            </div>
+          </div>
+          <!-- Servicio 3 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+              <h5 class="fw-bold mb-2">Reparación de Equipos</h5>
+              <p class="text-muted mb-0 small">Diagnóstico y reparación de PCs y laptops: hardware, fuentes, pantallas y componentes críticos.</p>
+            </div>
+          </div>
+          <!-- Servicio 4 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-server"></i></div>
+              <h5 class="fw-bold mb-2">Clonación & VMware</h5>
+              <p class="text-muted mb-0 small">Migración HDD/SSD sin pérdida de datos, respaldos completos y entornos virtuales seguros.</p>
+            </div>
+          </div>
+          <!-- Servicio 5 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-network-wired"></i></div>
+              <h5 class="fw-bold mb-2">Cableado Estructurado</h5>
+              <p class="text-muted mb-0 small">Diseño e instalación de redes: canaletas, patch panels, jacks RJ-45 y certificación Cat5e/6.</p>
+            </div>
+          </div>
+          <!-- Servicio 6 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-video"></i></div>
+              <h5 class="fw-bold mb-2">Videovigilancia CCTV</h5>
+              <p class="text-muted mb-0 small">Cámaras IP, DVR/NVR, acceso remoto desde smartphone y almacenamiento en la nube.</p>
+            </div>
+          </div>
+          <!-- Servicio 7 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-wifi"></i></div>
+              <h5 class="fw-bold mb-2">Redes & Switches</h5>
+              <p class="text-muted mb-0 small">Configuración de routers, VLANs, Wi-Fi empresarial y diagnóstico avanzado de conectividad.</p>
+            </div>
+          </div>
+          <!-- Servicio 8 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card-service p-4">
+              <div class="icon-box"><i class="fa-solid fa-headset"></i></div>
+              <h5 class="fw-bold mb-2">Soporte Remoto/Presencial</h5>
+              <p class="text-muted mb-0 small">Atención inmediata a distancia o visitas técnicas a domicilio/oficina según urgencia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SERVICIO ESTRELLA: WEB + CHATBOT INTELIGENTE
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="chatbot-web" class="featured-service py-5">
+      <div class="container py-4">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <span class="badge bg-white text-primary fw-bold px-3 py-2 mb-3">🌟 Servicio Destacado</span>
+            <h2 class="display-6 fw-bold mb-3">Tu sitio web con un <span class="text-warning">Chatbot Inteligente</span> que vende por ti</h2>
+            <p class="lead mb-4 text-white-75">
+              Automatiza la atención, califica prospectos y opera 24/7 sin que pases horas respondiendo mensajes. 
+              Integro agentes de IA entrenados con tu catálogo, políticas y FAQs.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2 d-flex align-items-start"><i class="fa-solid fa-check-circle text-warning mt-1 me-2"></i> <span>Responde al instante en WhatsApp, Web y Facebook</span></li>
+              <li class="mb-2 d-flex align-items-start"><i class="fa-solid fa-check-circle text-warning mt-1 me-2"></i> <span>Agenda citas, envía cotizaciones y cierra ventas</span></li>
+              <li class="mb-2 d-flex align-items-start"><i class="fa-solid fa-check-circle text-warning mt-1 me-2"></i> <span>Aprende de tus interacciones y mejora continuamente</span></li>
+            </ul>
+            <a href="#contacto" class="btn btn-accent btn-lg shadow-sm">
+              <i class="fa-solid fa-rocket me-2"></i> Quiero mi Web + Chatbot
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <div class="chatbot-mockup text-dark">
+              <div class="d-flex align-items-center mb-3 pb-2 border-bottom">
+                <div class="bg-success rounded-circle p-2 me-2"><i class="fa-solid fa-robot text-white"></i></div>
+                <div>
+                  <strong>Asistente IA</strong><br>
+                  <small class="text-success">● En línea ahora</small>
+                </div>
+              </div>
+              <div class="chat-bubble">¡Hola! 👋 ¿En qué puedo ayudarte hoy? Tengo acceso a precios, horarios y disponibilidad.</div>
+              <div class="chat-bubble ai">Busco una asesoría TI para mi PyME. ¿Tienen paquetes para redes y cámaras?</div>
+              <div class="chat-bubble">¡Por supuesto! 📦 Para PyMEs ofrecemos el <strong>Pack Seguridad & Redes</strong> con descuento del 15%. ¿Te envío la propuesta ahora?</div>
+              <div class="mt-3 pt-3 border-top d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary rounded-pill">Ver catálogo</button>
+                <button class="btn btn-sm btn-primary rounded-pill">Hablar con humano</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         BENEFICIOS / POR QUÉ ELEGIRME
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="beneficios" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <h2 class="section-title mb-2">Experiencia que marca la diferencia</h2>
+          <p class="text-muted">Más de una década resolviendo problemas con honestidad, rapidez y resultados medibles.</p>
+        </div>
+        <div class="row g-4 text-center">
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 h-100 bg-light rounded-3">
+              <i class="fa-solid fa-certificate fa-2x text-primary mb-3"></i>
+              <h5 class="fw-bold">Certificado & Actualizado</h5>
+              <p class="text-muted mb-0 small">10+ años en TI. Conocimiento en tecnologías vigentes y emergentes.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 h-100 bg-light rounded-3">
+              <i class="fa-solid fa-bolt fa-2x text-warning mb-3"></i>
+              <h5 class="fw-bold">Respuesta < 2 Horas</h5>
+              <p class="text-muted mb-0 small">Atención inmediata para urgencias. Sin citas a semanas vista.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 h-100 bg-light rounded-3">
+              <i class="fa-solid fa-shield-halved fa-2x text-success mb-3"></i>
+              <h5 class="fw-bold">Privacidad Garantizada</h5>
+              <p class="text-muted mb-0 small">Tus datos y equipos protegidos. Trabajo bajo estricta confidencialidad.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 h-100 bg-light rounded-3">
+              <i class="fa-solid fa-file-invoice-dollar fa-2x text-info mb-3"></i>
+              <h5 class="fw-bold">Precios Transparentes</h5>
+              <p class="text-muted mb-0 small">Presupuesto detallado antes de iniciar. Cero cargos ocultos.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 h-100 bg-light rounded-3">
+              <i class="fa-solid fa-award fa-2x text-danger mb-3"></i>
+              <h5 class="fw-bold">Garantía de Trabajo</h5>
+              <p class="text-muted mb-0 small">Si el problema persiste, regreso sin costo adicional. Sin preguntas.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 h-100 bg-light rounded-3">
+              <i class="fa-brands fa-whatsapp fa-2x text-success mb-3"></i>
+              <h5 class="fw-bold">Soporte Continuo</h5>
+              <p class="text-muted mb-0 small">Seguimiento post-servicio y asesoría directa por WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TESTIMONIOS
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="testimonios" class="py-5 bg-light">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <h2 class="section-title mb-2">Lo que dicen mis clientes</h2>
+          <p class="text-muted">Casos reales de empresas y profesionales que confían en estos servicios.</p>
+        </div>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <!-- Testimonio 1 -->
+            <div class="carousel-item active">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="testimonial-card">
+                    <div class="text-warning mb-2">★★★★★</div>
+                    <p class="fst-italic mb-3">"Resolvió un problema crítico en nuestra red en menos de 3 horas. Configuró el switch correctamente y capacitó a mi equipo. Excelente atención y muy puntual."</p>
+                    <div class="d-flex align-items-center">
+                      <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width:40px;height:40px;">RM</div>
+                      <div>
+                        <strong class="d-block">Roberto Mendoza</strong>
+                        <small class="text-muted">Gerente de Operaciones, PyME Logística</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Testimonio 2 -->
+            <div class="carousel-item">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="testimonial-card">
+                    <div class="text-warning mb-2">★★★★★</div>
+                    <p class="fst-italic mb-3">"Instaló 8 cámaras en nuestra sucursal y configuró el acceso remoto desde el celular. Todo quedó perfectamente integrado. Lo recomiendo ampliamente."</p>
+                    <div class="d-flex align-items-center">
+                      <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width:40px;height:40px;">LC</div>
+                      <div>
+                        <strong class="d-block">Laura Campos</strong>
+                        <small class="text-muted">Directora, Boutique Moda Centro</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Testimonio 3 -->
+            <div class="carousel-item">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="testimonial-card">
+                    <div class="text-warning mb-2">★★★★★</div>
+                    <p class="fst-italic mb-3">"Me ayudó a crear macros en Excel que ahorraron horas de trabajo manual cada semana. Muy didáctico al explicar el proceso. Una inversión que pagó de inmediato."</p>
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width:40px;height:40px;">AP</div>
+                      <div>
+                        <strong class="d-block">Ana Patricia Rivas</strong>
+                        <small class="text-muted">Contadora, Despacho Independiente</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CONTACTO
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="contacto" class="py-5">
+      <div class="container py-4">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5">
+            <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 mb-3">Contacto Directo</span>
+            <h2 class="section-title mb-3">¿Necesitas ayuda?<br>Hablemos ahora</h2>
+            <p class="text-muted mb-4">Describe tu problema o el servicio que necesitas. Te respondo a la brevedad con diagnóstico y presupuesto sin compromiso.</p>
+            
+            <div class="d-flex flex-column gap-3 mb-4">
+              <a href="mailto:contacto@tiprofesional.mx" class="d-flex align-items-center text-decoration-none text-dark">
+                <span class="bg-light rounded p-2 me-3"><i class="fa-regular fa-envelope text-primary"></i></span>
+                <div>
+                  <small class="text-muted d-block">Correo electrónico</small>
+                  <strong>contacto@tiprofesional.mx</strong>
+                </div>
+              </a>
+              <a href="tel:+526691234567" class="d-flex align-items-center text-decoration-none text-dark">
+                <span class="bg-light rounded p-2 me-3"><i class="fa-brands fa-whatsapp text-success"></i></span>
+                <div>
+                  <small class="text-muted d-block">Teléfono / WhatsApp</small>
+                  <strong>+52 (669) 123-4567</strong>
+                </div>
+              </a>
+              <div class="d-flex align-items-center">
+                <span class="bg-light rounded p-2 me-3"><i class="fa-regular fa-clock text-warning"></i></span>
+                <div>
+                  <small class="text-muted d-block">Horario de atención</small>
+                  <strong>Lun–Sáb 8:00 – 20:00 · Urgencias 24/7</strong>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="bg-light rounded p-2 me-3"><i class="fa-solid fa-location-dot text-danger"></i></span>
+                <div>
+                  <small class="text-muted d-block">Cobertura</small>
+                  <strong>Mazatlán, Sinaloa y área metropolitana</strong>
+                </div>
+              </div>
+            </div>
+
+            <a href="https://wa.me/526691234567?text=Hola,%20necesito%20asesoría%20en%20TI" target="_blank" class="btn btn-success btn-lg w-100 shadow-sm">
+              <i class="fa-brands fa-whatsapp me-2"></i> Escríbeme por WhatsApp
+            </a>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5">
+              <h4 class="fw-bold mb-4">Enviar solicitud</h4>
+              <form id="contactForm" class="needs-validation" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="name" class="form-label fw-medium">Nombre completo</label>
+                    <input type="text" class="form-control form-control-lg bg-light" id="name" placeholder="Ej. Juan Pérez" required>
+                    <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label fw-medium">Teléfono</label>
+                    <input type="tel" class="form-control form-control-lg bg-light" id="phone" placeholder="Ej. 669 123 4567" required>
+                    <div class="invalid-feedback">Ingresa un teléfono válido.</div>
+                  </div>
+                  <div class="col-12">
+                    <label for="email" class="form-label fw-medium">Correo electrónico</label>
+                    <input type="email" class="form-control form-control-lg bg-light" id="email" placeholder="correo@ejemplo.com" required>
+                    <div class="invalid-feedback">Ingresa un correo válido.</div>
+                  </div>
+                  <div class="col-12">
+                    <label for="service" class="form-label fw-medium">Servicio requerido</label>
+                    <select class="form-select form-select-lg bg-light" id="service" required>
+                      <option value="" selected disabled>Selecciona un servicio…</option>
+                      <option value="Instalación de aplicaciones">Instalación de aplicaciones</option>
+                      <option value="Asesoría Windows / Office">Asesoría Windows / Office / Excel</option>
+                      <option value="Reparación de equipo">Reparación de equipo</option>
+                      <option value="Clonación / VMware">Clonación de disco / VMware</option>
+                      <option value="Cableado estructurado">Cableado estructurado</option>
+                      <option value="Cámaras de videovigilancia">Cámaras de videovigilancia</option>
+                      <option value="Redes y switches">Redes y switches</option>
+                      <option value="Web + Chatbot IA">🌟 Web + Chatbot Inteligente</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                    <div class="invalid-feedback">Selecciona un servicio.</div>
+                  </div>
+                  <div class="col-12">
+                    <label for="message" class="form-label fw-medium">Descripción del problema o servicio</label>
+                    <textarea class="form-control form-control-lg bg-light" id="message" rows="4" placeholder="Cuéntame los detalles para darte un diagnóstico preciso..." required></textarea>
+                    <div class="invalid-feedback">Describe brevemente lo que necesitas.</div>
+                  </div>
+                  <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">
+                      <i class="fa-regular fa-paper-plane me-2"></i> Enviar solicitud
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="bg-dark text-light py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 mb-3 mb-lg-0">
+          <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+            <span class="bg-primary text-white px-2 py-1 rounded" style="font-size:0.85rem;">TI</span>Pro
+          </h5>
+          <p class="text-secondary small">Especialista en Tecnologías de Información con más de 10 años brindando soluciones técnicas confiables para hogares y empresas en Mazatlán, Sinaloa.</p>
+          <div class="d-flex gap-3 mt-3">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook fa-lg"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram fa-lg"></i></a>
+            <a href="https://wa.me/526691234567" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp fa-lg"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6 class="fw-bold mb-3">Servicios</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#servicios">Instalación de software</a></li>
+            <li class="mb-2"><a href="#servicios">Soporte Windows & Office</a></li>
+            <li class="mb-2"><a href="#servicios">Reparación de equipos</a></li>
+            <li class="mb-2"><a href="#servicios">Clonación y VMware</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6 class="fw-bold mb-3">Especialidades</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#servicios">Cableado estructurado</a></li>
+            <li class="mb-2"><a href="#servicios">Videovigilancia CCTV</a></li>
+            <li class="mb-2"><a href="#servicios">Redes y switches</a></li>
+            <li class="mb-2"><a href="#chatbot-web" class="text-warning fw-semibold">Web + Chatbot IA</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="fw-bold mb-3">Contacto Rápido</h6>
+          <ul class="list-unstyled small text-secondary">
+            <li class="mb-2"><i class="fa-regular fa-envelope me-2"></i> contacto@tiprofesional.mx</li>
+            <li class="mb-2"><i class="fa-brands fa-whatsapp me-2"></i> +52 (669) 123-4567</li>
+            <li class="mb-2"><i class="fa-solid fa-location-dot me-2"></i> Mazatlán, Sinaloa, México</li>
+            <li class="mb-2 mt-3">
+              <a href="#contacto" class="btn btn-sm btn-outline-light px-3">📅 Agendar cita</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4 border-secondary">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <small class="text-secondary">© <span id="year"></span> TIPro — Servicios Profesionales en Tecnologías de Información.</small>
+        </div>
+        <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+          <small class="text-secondary">
+            <a href="#" class="me-2">Aviso de Privacidad</a> | <a href="#">Términos de Servicio</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BOTÓN FLOTANTE WHATSAPP
+       ═══════════════════════════════════════════════════════════ -->
+  <a href="https://wa.me/526691234567?text=Hola,%20necesito%20soporte%20TI" target="_blank" class="whatsapp-float" aria-label="Chatea por WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Bootstrap 5.3 JS Bundle (Popper incluido) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript Vanilla para interactividad ligera -->
+  <script>
+    // 1. Actualizar año automáticamente en el footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 2. Efecto Navbar al hacer scroll (fondo sólido + sombra)
+    const navbar = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('shadow-sm', 'bg-white');
+        navbar.classList.remove('bg-transparent');
+      } else {
+        navbar.classList.remove('shadow-sm', 'bg-white');
+      }
+    });
+
+    // 3. Validación de formulario Bootstrap + Simulación de envío
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!contactForm.checkValidity()) {
+        e.stopPropagation();
+      } else {
+        // Simulación de envío exitoso
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando...';
+        
+        setTimeout(() => {
+          contactForm.reset();
+          contactForm.classList.remove('was-validated');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          alert('✅ ¡Solicitud enviada con éxito! Te contactaré en menos de 2 horas por WhatsApp o correo.');
+        }, 1500);
+      }
+      contactForm.classList.add('was-validated');
+    }, false);
+
+    // 4. Integración opcional con Tawk.to (Descomenta y reemplaza TU_ID_DE_PROPIEDAD)
+    /*
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/TU_ID_DE_PROPIEDAD/default';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+    */
+  </script>
+</body>
+</html>
