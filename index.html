@@ -201,42 +201,452 @@
       color: #fff;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       WHATSAPP FLOTANTE
-       ═══════════════════════════════════════════════════════════ */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 9999;
-      background: #25d366;
-      color: #fff;
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-      transition: var(--transition-base);
-      animation: pulse-wa 2s infinite;
+
+
+
+
+
+
+
+
+
+
+/*
+<!-- ═══════════════════════════════════════════════════════════
+     WIDGET DE WHATSAPP CON CHATBOT
+     Este código debe ir antes de </body> en tu index.html
+     ═══════════════════════════════════════════════════════════ -->
+
+
+   ═══════════════════════════════════════════════════════════
+     VARIABLES Y ESTILOS BASE DEL WIDGET
+     ═══════════════════════════════════════════════════════════ */
+:root {
+    --wa-green: #25d366;
+    --wa-dark-green: #128c7e;
+    --wa-light-green: #dcf8c6;
+    --wa-blue: #007bff;
+    --wa-gray: #f0f2f5;
+    --wa-dark: #111b21;
+    --wa-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --wa-radius: 16px;
+    --wa-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BOTÓN FLOTANTE DE WHATSAPP
+     ═══════════════════════════════════════════════════════════ */
+  .whatsapp-widget-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    background: var(--wa-green);
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    transition: var(--wa-transition);
+    cursor: pointer;
+    border: none;
+    animation: pulse-wa 2s infinite;
+  }
+
+  .whatsapp-widget-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+  }
+
+  .whatsapp-widget-btn.active {
+    animation: none;
+  }
+
+  @keyframes pulse-wa {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
     }
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      color: #fff;
+    70% {
+      box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
     }
-    @keyframes pulse-wa {
-      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-      70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     VENTANA DE CHAT
+     ═══════════════════════════════════════════════════════════ */
+  .whatsapp-chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    z-index: 9998;
+    width: 380px;
+    max-width: calc(100vw - 48px);
+    height: 600px;
+    max-height: calc(100vh - 150px);
+    background: #fff;
+    border-radius: var(--wa-radius);
+    box-shadow: var(--wa-shadow);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .whatsapp-chat-window.active {
+    display: flex;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     HEADER DEL CHAT
+     ═══════════════════════════════════════════════════════════ */
+  .wa-chat-header {
+    background: var(--wa-dark-green);
+    color: #fff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wa-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--wa-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .wa-header-info {
+    flex: 1;
+  }
+
+  .wa-header-info h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .wa-header-info p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .wa-status-dot {
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .wa-close-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--wa-transition);
+  }
+
+  .wa-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ÁREA DE MENSAJES
+     ═══════════════════════════════════════════════════════════ */
+  .wa-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: var(--wa-gray);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .wa-chat-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .wa-chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .wa-chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BURBUJAS DE MENSAJE
+     ═══════════════════════════════════════════════════════════ */
+  .wa-message {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .wa-message.bot {
+    background: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .wa-message.user {
+    background: var(--wa-light-green);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+
+  .wa-message-time {
+    font-size: 0.7rem;
+    color: #667781;
+    margin-top: 4px;
+    text-align: right;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BOTONES DE ACCIÓN RÁPIDA
+     ═══════════════════════════════════════════════════════════ */
+  .wa-quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .wa-quick-reply-btn {
+    background: #fff;
+    border: 1px solid var(--wa-green);
+    color: var(--wa-dark-green);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--wa-transition);
+  }
+
+  .wa-quick-reply-btn:hover {
+    background: var(--wa-green);
+    color: #fff;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BOTÓN DE AGENDAR ASESORÍA
+     ═══════════════════════════════════════════════════════════ */
+  .wa-schedule-btn {
+    display: block;
+    width: 100%;
+    background: var(--wa-blue);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: var(--wa-transition);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .wa-schedule-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    color: #fff;
+  }
+
+  .wa-schedule-price {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     INPUT DE MENSAJE
+     ═══════════════════════════════════════════════════════════ */
+  .wa-chat-input {
+    padding: 12px 16px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .wa-chat-input input {
+    flex: 1;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--wa-transition);
+  }
+
+  .wa-chat-input input:focus {
+    border-color: var(--wa-green);
+  }
+
+  .wa-send-btn {
+    background: var(--wa-green);
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--wa-transition);
+    flex-shrink: 0;
+  }
+
+  .wa-send-btn:hover {
+    background: var(--wa-dark-green);
+  }
+
+  .wa-send-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     INDICADOR DE ESCRITURA
+     ═══════════════════════════════════════════════════════════ */
+  .wa-typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 10px 14px;
+    background: #fff;
+    border-radius: 12px;
+    align-self: flex-start;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .wa-typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #999;
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+  }
+
+  .wa-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .wa-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typing {
+    0%, 60%, 100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════════════════════════ */
+  @media (max-width: 480px) {
+    .whatsapp-chat-window {
+      width: calc(100vw - 32px);
+      height: calc(100vh - 120px);
+      bottom: 90px;
+      right: 16px;
     }
 
-    /* Responsive tweaks */
-    @media (max-width: 767.98px) {
-      .hero-section h1 { font-size: 2.25rem !important; }
-      .stat-card { padding: 1rem; }
+    .whatsapp-widget-btn {
+      bottom: 16px;
+      right: 16px;
+      width: 56px;
+      height: 56px;
+      font-size: 1.6rem;
     }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
@@ -737,12 +1147,7 @@
     </div>
   </footer>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       BOTÓN FLOTANTE WHATSAPP
-       ═══════════════════════════════════════════════════════════ -->
-  <a href="https://wa.me/526693302997?text=Hola,%20necesito%20soporte%20TI" target="_blank" class="whatsapp-float" aria-label="Chatea por WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
+
 
   <!-- Bootstrap 5.3 JS Bundle (Popper incluido) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -800,5 +1205,495 @@
     })();
     */
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="whatsapp-widget-btn" id="whatsappWidgetBtn" aria-label="Abrir chat de WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</button>
+
+<div class="whatsapp-chat-window" id="whatsappChatWindow">
+  <!-- Header del Chat -->
+  <div class="wa-chat-header">
+    <div class="wa-avatar">
+      <i class="fa-solid fa-user-tie"></i>
+    </div>
+    <div class="wa-header-info">
+      <h4>TI Profesional</h4>
+      <p>
+        <span class="wa-status-dot"></span>
+        En línea ahora
+      </p>
+    </div>
+    <button class="wa-close-btn" id="waCloseBtn" aria-label="Cerrar chat">
+      <i class="fa-solid fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Área de Mensajes -->
+  <div class="wa-chat-messages" id="waChatMessages">
+    <!-- Los mensajes se agregarán dinámicamente con JavaScript -->
+  </div>
+
+  <!-- Input de Mensaje -->
+  <div class="wa-chat-input">
+    <input 
+      type="text" 
+      id="waMessageInput" 
+      placeholder="Escribe tu mensaje..."
+      autocomplete="off"
+    >
+    <button class="wa-send-btn" id="waSendBtn" aria-label="Enviar mensaje">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </div>
+</div>
+
+<!-- JavaScript del Chatbot -->
+<script>
+  /**
+   * ═══════════════════════════════════════════════════════════
+   * CHATBOT DE WHATSAPP - CONFIGURACIÓN Y LÓGICA
+   * ═══════════════════════════════════════════════════════════
+   */
+
+  // ═══════════════════════════════════════════════════════════
+  // CONFIGURACIÓN INICIAL
+  // ═══════════════════════════════════════════════════════════
+  
+  /**
+   * Número de WhatsApp para agendar asesoría
+   * Formato: código de país + lada + número (sin espacios ni signos)
+   * Ejemplo: 526693302997 (México + 669 + 3302997)
+   */
+  const WHATSAPP_NUMBER = '526693302997';
+
+  /**
+   * Costo de la asesoría personalizada
+   * Se mostrará en el botón de "Agendar Asesoría"
+   */
+  const ASESORIA_COSTO = 150;
+
+  /**
+   * Base de datos de respuestas del chatbot
+   * Cada entrada tiene:
+   * - keywords: Array de palabras clave que activan la respuesta
+   * - response: Texto de respuesta del bot
+   * - quickReplies: (Opcional) Botones de respuesta rápida
+   */
+  const chatbotResponses = [
+    {
+      keywords: ['hola', 'buenas', 'buenos días', 'buenas tardes', 'buenas noches', 'hey'],
+      response: '¡Hola! 👋 Soy el asistente virtual de TI Profesional. ¿En qué puedo ayudarte hoy?',
+      quickReplies: [
+        '¿Qué servicios ofreces?',
+        '¿Cuánto cuestan?',
+        'Necesito soporte técnico'
+      ]
+    },
+    {
+      keywords: ['servicios', 'ofreces', 'hacen', 'trabajan', 'qué hacen'],
+      response: 'Ofrecemos soluciones integrales de TI:\n\n🔧 <b>Soporte Técnico:</b> Reparación de PCs, laptops, instalación de software\n🌐 <b>Redes:</b> Cableado estructurado, configuración de routers, Wi-Fi empresarial\n📹 <b>Videovigilancia:</b> Cámaras IP, DVR/NVR, acceso remoto\n💻 <b>Virtualización:</b> Clonación de discos, VMware\n🤖 <b>Web + Chatbot:</b> Sitios web con chatbots inteligentes\n\n¿Sobre cuál te gustaría saber más?',
+      quickReplies: [
+        'Soporte técnico',
+        'Redes',
+        'Cámaras',
+        'Web + Chatbot'
+      ]
+    },
+    {
+      keywords: ['precio', 'cuesta', 'costo', 'cuánto', 'tarifa', 'cotización'],
+      response: `Nuestros precios varían según el servicio:\n\n💻 <b>Soporte técnico:</b> Desde $300 MXN\n🌐 <b>Redes y cableado:</b> Cotización personalizada\n📹 <b>Cámaras CCTV:</b> Paquetes desde $3,500 MXN\n🤖 <b>Web + Chatbot:</b> Desde $5,000 MXN\n\nPara una cotización exacta, necesito conocer tus requerimientos específicos. ¿Te gustaría agendar una asesoría personalizada?`,
+      quickReplies: [
+        'Agendar asesoría',
+        'Más información'
+      ]
+    },
+    {
+      keywords: ['soporte', 'técnico', 'reparación', 'reparar', 'computadora', 'laptop', 'pc'],
+      response: 'Nuestro servicio de soporte técnico incluye:\n\n✅ Diagnóstico completo\n✅ Reparación de hardware y software\n✅ Instalación de Windows 10/11\n✅ Configuración de Office 365\n✅ Eliminación de virus y malware\n✅ Optimización de rendimiento\n\n📍 Atención presencial en Mazatlán o soporte remoto\n\n¿Cuál es el problema que estás experimentando?',
+      quickReplies: [
+        'Mi PC está lenta',
+        'No enciende',
+        'Tiene virus',
+        'Necesito instalar software'
+      ]
+    },
+    {
+      keywords: ['red', 'redes', 'cableado', 'wifi', 'wi-fi', 'internet', 'router'],
+      response: 'Servicios de redes y conectividad:\n\n🔌 <b>Cableado estructurado:</b> Instalación de puntos de red, patch panels, certificación Cat5e/6\n📶 <b>Wi-Fi empresarial:</b> Diseño e instalación de redes inalámbricas\n🔧 <b>Configuración de routers:</b> VLANs, seguridad, optimización\n🔍 <b>Diagnóstico:</b> Solución de problemas de conectividad\n\n¿Necesitas instalación nueva o reparación?',
+      quickReplies: [
+        'Instalación nueva',
+        'Reparar red existente',
+        'Cotización'
+      ]
+    },
+    {
+      keywords: ['cámara', 'cámaras', 'cctv', 'videovigilancia', 'seguridad', 'dvr', 'nvr'],
+      response: 'Sistemas de videovigilancia CCTV:\n\n📹 <b>Cámaras IP:</b> Alta definición, visión nocturna\n🎥 <b>DVR/NVR:</b> Grabación y almacenamiento\n📱 <b>Acceso remoto:</b> Visualiza desde tu celular\n☁️ <b>Almacenamiento en la nube:</b> Respaldo seguro\n\n📦 <b>Paquetes disponibles:</b>\n• Básico (4 cámaras): Desde $3,500 MXN\n• Estándar (8 cámaras): Desde $6,500 MXN\n• Premium (16 cámaras): Cotización personalizada\n\n¿Cuántas cámaras necesitas?',
+      quickReplies: [
+        '4 cámaras',
+        '8 cámaras',
+        'Más de 8',
+        'No sé, necesito asesoría'
+      ]
+    },
+    {
+      keywords: ['web', 'página', 'sitio web', 'chatbot', 'inteligente', 'ia'],
+      response: 'Desarrollo web con chatbots inteligentes:\n\n🌐 <b>Sitio web profesional:</b> Diseño responsive, rápido y optimizado\n🤖 <b>Chatbot con IA:</b> Atención automática 24/7\n📱 <b>Integración WhatsApp:</b> Respuestas automáticas\n📊 <b>Calificación de leads:</b> Automatiza tu ventas\n\n💰 <b>Inversión:</b> Desde $5,000 MXN\n\nPerfecto para PyMEs que quieren automatizar la atención al cliente. ¿Te gustaría ver ejemplos?',
+      quickReplies: [
+        'Ver ejemplos',
+        'Cotización',
+        'Cómo funciona'
+      ]
+    },
+    {
+      keywords: ['clonación', 'vmware', 'virtualización', 'disco', 'hdd', 'ssd', 'migración'],
+      response: 'Servicios de virtualización y clonación:\n\n💾 <b>Clonación de discos:</b> Migración de HDD a SSD sin pérdida de datos\n🖥️ <b>VMware:</b> Creación de entornos virtuales seguros\n💿 <b>Respaldos completos:</b> Protección de tu información\n\nIdeal para:\n• Mejorar rendimiento de PCs antiguas\n• Crear entornos de prueba\n• Proteger datos críticos\n\n¿Necesitas migrar un disco o crear una máquina virtual?',
+      quickReplies: [
+        'Migrar HDD a SSD',
+        'Crear máquina virtual',
+        'Respaldo de datos'
+      ]
+    },
+    {
+      keywords: ['horario', 'atienden', 'disponibilidad', 'cuándo', 'hora'],
+      response: '🕐 <b>Horario de atención:</b>\n\n📅 Lunes a Sábado: 8:00 AM - 8:00 PM\n🚨 Urgencias 24/7: Disponible\n\n📍 <b>Cobertura:</b> Mazatlán, Sinaloa y área metropolitana\n\nPara urgencias fuera de horario, puedes contactarnos por WhatsApp y te atenderemos lo antes posible.',
+      quickReplies: [
+        'Agendar cita',
+        'Emergencia'
+      ]
+    },
+    {
+      keywords: ['contacto', 'teléfono', 'whatsapp', 'correo', 'email', 'comunicar'],
+      response: '📞 <b>Datos de contacto:</b>\n\n📱 WhatsApp: +52 669 330 2997\n📧 Email: contacto@tiprofesional.mx\n\n📍 <b>Ubicación:</b> Mazatlán, Sinaloa, México\n\nPuedes escribirnos directamente por WhatsApp o llenar el formulario de contacto en esta página. ¿En qué más puedo ayudarte?',
+      quickReplies: [
+        'Escribir por WhatsApp',
+        'Ver servicios'
+      ]
+    },
+    {
+      keywords: ['agendar', 'cita', 'asesoría', 'reservar', 'appointment'],
+      response: `📅 <b>Agendar Asesoría Personalizada</b>\n\nNuestras asesorías tienen un costo de <b>$${ASESORIA_COSTO} MXN</b> e incluyen:\n\n✅ Análisis detallado de tus necesidades\n✅ Propuesta técnica personalizada\n✅ Cotización sin compromiso\n✅ Duración: 45-60 minutos\n\nPuedes agendar tu asesoría directamente por WhatsApp. ¿Deseas continuar?`,
+      showScheduleButton: true
+    },
+    {
+      keywords: ['gracias', 'thank', 'excelente', 'perfecto', 'genial'],
+      response: '¡De nada! 😊 Estoy aquí para ayudarte. Si tienes más preguntas en el futuro, no dudes en escribirnos. ¡Que tengas excelente día!',
+      quickReplies: [
+        'Ver servicios',
+        'Contactar por WhatsApp'
+      ]
+    },
+    {
+      keywords: ['adiós', 'adios', 'bye', 'chao', 'hasta luego'],
+      response: '¡Hasta luego! 👋 Fue un placer atenderte. Recuerda que estamos disponibles 24/7 para urgencias. ¡Que te vaya muy bien!',
+      quickReplies: [
+        'Ver servicios',
+        'Contactar por WhatsApp'
+      ]
+    }
+  ];
+
+  /**
+   * Mensaje por defecto cuando no se encuentra coincidencia
+   */
+  const defaultResponse = {
+    response: 'Disculpa, no entendí completamente tu consulta. Para brindarte la mejor atención, te recomiendo agendar una asesoría personalizada con nuestro equipo.',
+    showScheduleButton: true
+  };
+
+  // ═══════════════════════════════════════════════════════════
+  // ELEMENTOS DEL DOM
+  // ═══════════════════════════════════════════════════════════
+  
+  const widgetBtn = document.getElementById('whatsappWidgetBtn');
+  const chatWindow = document.getElementById('whatsappChatWindow');
+  const closeBtn = document.getElementById('waCloseBtn');
+  const chatMessages = document.getElementById('waChatMessages');
+  const messageInput = document.getElementById('waMessageInput');
+  const sendBtn = document.getElementById('waSendBtn');
+
+  // ═══════════════════════════════════════════════════════════
+  // FUNCIONES AUXILIARES
+  // ═══════════════════════════════════════════════════════════
+
+  /**
+   * Obtiene la hora actual en formato HH:MM
+   * @returns {string} Hora actual formateada
+   */
+  function getCurrentTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  /**
+   * Agrega un mensaje al chat
+   * @param {string} text - Texto del mensaje
+   * @param {string} sender - 'bot' o 'user'
+   * @param {boolean} showScheduleButton - Si debe mostrar botón de agendar
+   * @param {Array} quickReplies - Array de botones de respuesta rápida
+   */
+  function addMessage(text, sender = 'bot', showScheduleButton = false, quickReplies = []) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `wa-message ${sender}`;
+    
+    // Crear contenido del mensaje
+    let messageContent = `<div>${text}</div>`;
+    
+    // Agregar hora
+    messageContent += `<div class="wa-message-time">${getCurrentTime()}</div>`;
+    
+    // Agregar botones de respuesta rápida si existen
+    if (quickReplies && quickReplies.length > 0) {
+      messageContent += '<div class="wa-quick-replies">';
+      quickReplies.forEach(reply => {
+        messageContent += `<button class="wa-quick-reply-btn" onclick="handleQuickReply('${reply}')">${reply}</button>`;
+      });
+      messageContent += '</div>';
+    }
+    
+    // Agregar botón de agendar asesoría si es necesario
+    if (showScheduleButton) {
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        `Hola, me gustaría agendar una asesoría personalizada. Entiendo que tiene un costo de $${ASESORIA_COSTO} MXN.`
+      )}`;
+      
+      messageContent += `
+        <a href="${whatsappUrl}" target="_blank" class="wa-schedule-btn">
+          📅 Agendar Asesoría Personalizada
+          <span class="wa-schedule-price">Costo: $${ASESORIA_COSTO} MXN</span>
+        </a>
+      `;
+    }
+    
+    messageDiv.innerHTML = messageContent;
+    chatMessages.appendChild(messageDiv);
+    
+    // Scroll automático al último mensaje
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  /**
+   * Muestra el indicador de "escribiendo..."
+   * @returns {HTMLElement} Elemento del indicador
+   */
+  function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'wa-typing-indicator';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+      <div class="wa-typing-dot"></div>
+      <div class="wa-typing-dot"></div>
+      <div class="wa-typing-dot"></div>
+    `;
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typingDiv;
+  }
+
+  /**
+   * Oculta el indicador de "escribiendo..."
+   */
+  function hideTypingIndicator() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+
+  /**
+   * Busca una respuesta basada en el mensaje del usuario
+   * @param {string} userMessage - Mensaje del usuario
+   * @returns {Object} Objeto con la respuesta encontrada
+   */
+  function findResponse(userMessage) {
+    const normalizedMessage = userMessage.toLowerCase().trim();
+    
+    // Buscar coincidencias en la base de datos
+    for (const entry of chatbotResponses) {
+      for (const keyword of entry.keywords) {
+        if (normalizedMessage.includes(keyword.toLowerCase())) {
+          return entry;
+        }
+      }
+    }
+    
+    // Si no se encuentra coincidencia, retornar respuesta por defecto
+    return defaultResponse;
+  }
+
+  /**
+   * Procesa el mensaje del usuario y genera una respuesta
+   * @param {string} userMessage - Mensaje del usuario
+   */
+  function processMessage(userMessage) {
+    if (!userMessage.trim()) return;
+    
+    // Agregar mensaje del usuario
+    addMessage(userMessage, 'user');
+    
+    // Limpiar input
+    messageInput.value = '';
+    sendBtn.disabled = true;
+    
+    // Mostrar indicador de escritura
+    const typingIndicator = showTypingIndicator();
+    
+    // Simular delay de respuesta (1-2 segundos)
+    setTimeout(() => {
+      hideTypingIndicator();
+      
+      // Buscar respuesta
+      const response = findResponse(userMessage);
+      
+      // Agregar respuesta del bot
+      addMessage(
+        response.response,
+        'bot',
+        response.showScheduleButton || false,
+        response.quickReplies || []
+      );
+    }, 1000 + Math.random() * 1000);
+  }
+
+  /**
+   * Maneja los clics en botones de respuesta rápida
+   * @param {string} reply - Texto de la respuesta rápida
+   */
+  function handleQuickReply(reply) {
+    processMessage(reply);
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // EVENT LISTENERS
+  // ═══════════════════════════════════════════════════════════
+
+  /**
+   * Abrir/Cerrar ventana de chat
+   */
+  widgetBtn.addEventListener('click', () => {
+    const isActive = chatWindow.classList.toggle('active');
+    widgetBtn.classList.toggle('active');
+    
+    // Si se abre por primera vez, mostrar mensaje de bienvenida
+    if (isActive && chatMessages.children.length === 0) {
+      setTimeout(() => {
+        addMessage(
+          '¡Hola! 👋 Soy el asistente virtual de TI Profesional. ¿En qué puedo ayudarte hoy?',
+          'bot',
+          false,
+          ['¿Qué servicios ofreces?', '¿Cuánto cuestan?', 'Necesito soporte técnico']
+        );
+      }, 300);
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    chatWindow.classList.remove('active');
+    widgetBtn.classList.remove('active');
+  });
+
+  /**
+   * Enviar mensaje con botón
+   */
+  sendBtn.addEventListener('click', () => {
+    const message = messageInput.value.trim();
+    if (message) {
+      processMessage(message);
+    }
+  });
+
+  /**
+   * Enviar mensaje con Enter
+   */
+  messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      const message = messageInput.value.trim();
+      if (message) {
+        processMessage(message);
+      }
+    }
+  });
+
+  /**
+   * Habilitar/Deshabilitar botón de enviar
+   */
+  messageInput.addEventListener('input', () => {
+    sendBtn.disabled = !messageInput.value.trim();
+  });
+
+  /**
+   * Cerrar chat al hacer clic fuera (opcional)
+   */
+  document.addEventListener('click', (e) => {
+    if (!chatWindow.contains(e.target) && 
+        !widgetBtn.contains(e.target) && 
+        chatWindow.classList.contains('active')) {
+      chatWindow.classList.remove('active');
+      widgetBtn.classList.remove('active');
+    }
+  });
+
+  // ═══════════════════════════════════════════════════════════
+  // INICIALIZACIÓN
+  // ═══════════════════════════════════════════════════════════
+
+  /**
+   * Mostrar notificación de bienvenida después de 5 segundos
+   * (Opcional - Puedes comentar esta sección si no la quieres)
+   */
+  setTimeout(() => {
+    if (!chatWindow.classList.contains('active')) {
+      // Puedes agregar una notificación visual aquí si lo deseas
+      console.log('Widget de WhatsApp listo para usar');
+    }
+  }, 5000);
+
+  console.log('🤖 Chatbot de WhatsApp inicializado correctamente');
+  console.log(`📱 Número configurado: +${WHATSAPP_NUMBER}`);
+  console.log(`💰 Costo de asesoría: $${ASESORIA_COSTO} MXN`);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
